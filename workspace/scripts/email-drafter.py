@@ -88,7 +88,10 @@ I run GeoXperts — we help local trades businesses show up when people ask AI a
 
 {plan_para}
 
-Would you be up for a quick 15-minute call to see if it's something that could work for {name}? No pressure at all — just a conversation.
+If it sounds interesting, you can book a free 15-minute call here — pick whatever time suits you:
+👉 https://cal.com/geoxperts/discovery
+
+No pressure at all — just a conversation.
 {SIGNATURE}"""
 
     return subject, body
