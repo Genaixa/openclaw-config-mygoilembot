@@ -1,0 +1,27 @@
+# Secrets — never commit these
+openclaw.json
+openclaw.json.bak*
+agents/*/config.json
+agents/*/agent/
+exec-approvals.json
+
+# Sessions & personal data
+agents/*/sessions/
+memory/
+logs/
+canvas/
+telegram/
+subagents/
+credentials/
+update-check.json
+cron/jobs.json.bak
+
+# Runtime
+workspace-dev/
+.env
+identity/
+*.bak
+workspace/DRAFT.txt
+workspace/.openclaw/
+workspace-senior/.openclaw/
+workspace-receptionist/.openclaw/
