@@ -146,7 +146,7 @@ def main():
 
     # Detect trade from filename (e.g. 2026-03-09-plumbers-gateshead.csv → plumber)
     import re as _re
-    trade_match = _re.search(r'-(\w+?)s?-[a-z]', os.path.basename(filepath))
+    trade_match = _re.search(r'\d{4}-\d{2}-\d{2}-(\w+?)s?-', os.path.basename(filepath))
     detected_trade = trade_match.group(1) if trade_match else 'plumber'
 
     with open(filepath, newline='', encoding='utf-8') as f:
@@ -189,9 +189,9 @@ def main():
         else:
             print(f"  ✗ IMAP failed — saved locally only: {file_path}")
 
-    # Update CSV statuses
+    # Update CSV statuses (strip injected fields not in original CSV)
     with open(filepath, 'w', newline='', encoding='utf-8') as f:
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer = csv.DictWriter(f, fieldnames=fieldnames, extrasaction='ignore')
         writer.writeheader()
         writer.writerows(rows)
 
