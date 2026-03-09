@@ -23,10 +23,14 @@ python3 /root/.openclaw/workspace/scripts/lead-finder.py --trade electrician --l
 - CSV saved to `/root/.openclaw/workspace/leads/YYYY-MM-DD-TRADEs-LOCATION.csv`
 - Columns: name, phone, mobile, email, website, address, status, notes
 
-## After running
-1. Show Naphtoli the summary (names + contact info found)
-2. Ask if he wants to filter, enrich, or start outreach
-3. Note the filename so it can be used by the email outreach skill
+## After running — enrich the results
+Always run the enricher immediately after finding leads:
+```bash
+python3 /root/.openclaw/workspace/scripts/lead-enricher.py --file FILENAME.csv
+```
+This scrapes each business website to find email addresses and missing phone numbers.
+
+Then show Naphtoli the enriched summary and ask if he wants to start outreach.
 
 ## Status field
 Update `status` in the CSV as leads progress:
