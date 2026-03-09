@@ -42,7 +42,7 @@ growth@geoXperts.co.uk
 def generate_email(lead):
     name    = lead['name']
     website = lead.get('website', '')
-    trade   = 'plumbing'
+    trade   = lead.get('trade', 'plumbing')
 
     # Try to find a customer review
     review = None
@@ -50,39 +50,38 @@ def generate_email(lead):
         print(f"  Looking for reviews on {website}...")
         review = find_best_review(website)
 
-    subject = f"{name} has great reviews — but is ChatGPT seeing them?"
+    subject = f"{name} — are your reviews showing up on ChatGPT?"
+
+    ai_explain = """You probably know that Google has been changing rapidly — more and more searches now show an "AI Overview" at the top, and tools like ChatGPT, Perplexity, and Google AI are becoming the first place people go when they need a recommendation.
+
+The way these AI tools work is different from traditional search. They don't just look at your website — they pull from reviews, trusted directories, and structured information about your business. Most local businesses haven't optimised for this yet, which means they're invisible to AI recommendations even if they rank well on Google."""
 
     if review:
-        review_para = f"""We had a look at {name} online and came across this review:
+        review_para = f"""We had a look at {name} online and found this review from one of your customers:
 
 "{review}"
 
-Honestly, that's exactly what customers want to see. But here's the thing — when someone picks up their phone and asks ChatGPT or Google AI "who's a good plumber near me?", they probably won't find {name}. Not because you're not good enough. Just because those AI assistants don't know you exist yet."""
-
-        plan_para = f"""What we do is simple: we make sure AI assistants know about {name}, what you do, and how good you are — so when someone nearby asks, your name actually comes up.
-
-Think of it like this: years ago, businesses had to get on Google to be found. Now the same thing is happening with AI. We help you get there first, before your competitors do.
-
-In practice that means:
-- More people finding you when they ask an AI for a recommendation
-- No extra ads, no extra spend
-- Just your existing reputation, working harder for you"""
+That's a strong recommendation — exactly the kind of thing that builds trust. But here's the problem: when someone in your area asks ChatGPT or Google AI "who's a good {trade} near me?", {name} probably won't come up. Not because you're not good enough — you clearly are. It's simply that AI assistants don't know you exist yet, so all those great reviews are going to waste."""
 
     else:
-        review_para = f"""We had a look at {name} online — you've clearly built up a strong local reputation over the years. The trouble is, when someone asks ChatGPT or Google AI "who's a good plumber near me?", businesses like yours often don't show up — not because you're not good enough, but because AI assistants simply don't know you exist yet."""
+        review_para = f"""We had a look at {name} online — it's clear you've built up a solid local reputation. But here's the problem: when someone in your area asks ChatGPT or Google AI "who's a good {trade} near me?", {name} probably won't come up. Not because you're not good enough — it's simply that AI assistants don't know you exist yet."""
 
-        plan_para = f"""What we do is simple: we make sure AI assistants know about {name}, what you do, where you are, and how good you are — so when someone nearby asks, your name actually comes up.
+    plan_para = f"""That's what we fix. At GeoXperts, we make sure AI tools know about {name} — who you are, what you do, where you work, and how good you are — so when someone nearby asks for a recommendation, your name actually comes up.
 
-Think of it like getting on Google back in the day. Same idea, new technology. And right now, most local trades businesses haven't done this yet — so there's a real head start available for those who move first.
+Think of it like getting on Google back in the day. Same idea, new technology. And right now, most local trades businesses haven't done this yet — which means there's a real first-mover advantage for businesses who act now.
 
 In practice that means:
 - More people finding you when they ask an AI for a recommendation
 - No extra ads, no extra spend
-- Just your existing reputation, working harder for you"""
+- Just your existing reputation, working harder for you
+
+And once you're established in AI search, it's also much harder for competitors to catch up — so the sooner you move, the stronger your position."""
 
     body = f"""Hi there,
 
-I run GeoXperts — we help local trades businesses show up when people ask AI assistants like ChatGPT or Google AI for recommendations. Think of it as the new version of being found on Google.
+I wanted to reach out about something most local {trade} businesses aren't aware of yet.
+
+{ai_explain}
 
 {review_para}
 
@@ -145,9 +144,18 @@ def main():
         print(f"ERROR: File not found: {filepath}")
         sys.exit(1)
 
+    # Detect trade from filename (e.g. 2026-03-09-plumbers-gateshead.csv → plumber)
+    import re as _re
+    trade_match = _re.search(r'-(\w+?)s?-[a-z]', os.path.basename(filepath))
+    detected_trade = trade_match.group(1) if trade_match else 'plumber'
+
     with open(filepath, newline='', encoding='utf-8') as f:
         rows = list(csv.DictReader(f))
         fieldnames = list(rows[0].keys()) if rows else []
+
+    # Inject trade into each row so generate_email can use it
+    for r in rows:
+        r.setdefault('trade', detected_trade)
 
     targets = [r for r in rows if r.get('status') == args.status and r.get('email')]
     skipped = [r for r in rows if r.get('status') == args.status and not r.get('email')]
