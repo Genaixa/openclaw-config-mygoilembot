@@ -25,6 +25,17 @@ python3 /root/.openclaw/workspace/scripts/email-drafter.py --file FILENAME.csv
 ```
 Drafts go to: Outlook Drafts folder + `/root/.openclaw/workspace/outreach/drafts/`
 
+### Step 4 — Check for replies / flag follow-ups
+```bash
+GEOXPERTS_EMAIL="growth@geoXperts.co.uk" \
+GEOXPERTS_PASSWORD="$GEOXPERTS_PASSWORD" \
+GEOXPERTS_IMAP_HOST="imap.one.com" \
+GEOXPERTS_IMAP_PORT="993" \
+python3 /root/.openclaw/workspace/scripts/reply-tracker.py --file FILENAME.csv
+```
+Run this after emails have been sent (status = `contacted`).
+Shows who replied, who needs a WhatsApp nudge after 48h, and drafts the follow-up message.
+
 ## Lead statuses
 - `new` — just found
 - `researched` — website/email looked up

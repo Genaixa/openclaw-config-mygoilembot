@@ -175,6 +175,8 @@ def main():
         if ok:
             print(f"  ✓ Saved to Outlook Drafts + {file_path}")
             lead['status'] = 'drafted'
+            today = datetime.now().strftime('%Y-%m-%d')
+            lead['notes'] = (lead.get('notes','') + f' | drafted:{today}').strip(' |')
             drafted += 1
         else:
             print(f"  ✗ IMAP failed — saved locally only: {file_path}")
