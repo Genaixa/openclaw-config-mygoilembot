@@ -44,30 +44,56 @@ def generate_email(lead):
     website = lead.get('website', '')
     trade   = 'plumbing'
 
-    subject = f"Is {name} showing up when people ask ChatGPT for a plumber?"
-
-    # Try to find a customer review for personalised P.S.
-    ps_line = ''
+    # Try to find a customer review
+    review = None
     if website:
         print(f"  Looking for reviews on {website}...")
         review = find_best_review(website)
-        if review:
-            ps_line = f'\nP.S. I came across this review of yours: "{review}" — that\'s exactly the kind of authority signal AI search engines look for. Worth making the most of it.'
+
+    subject = f"{name} has great reviews — but is ChatGPT seeing them?"
+
+    if review:
+        review_para = f"""We had a look at {name} online and came across this review:
+
+"{review}"
+
+That's a brilliant review — the kind of thing that builds real trust. But here's the thing: most people searching for a plumber today aren't just using Google anymore. They're asking ChatGPT, Google AI Overview, Perplexity. And those tools don't see reviews the way Google does — unless your business has been specifically optimised for them."""
+
+        plan_para = f"""That's what we do at GeoXperts. We take the authority you've already built — reviews like that one, your years of experience, your reputation — and make sure AI tools can actually read it, trust it, and recommend {name} when someone nearby asks for a plumber.
+
+The plan is straightforward:
+- We structure your existing reviews and content so AI search engines can parse them
+- We build your presence in the trusted sources AI tools pull from
+- We ensure when someone asks "who's a good plumber near me?" in ChatGPT or Google AI — your name comes up
+
+This means more inbound enquiries, without paying for ads."""
+
+    else:
+        review_para = f"""We had a look at {name} online — you've clearly built a solid local reputation. But here's something most {trade} businesses don't know yet: reviews and reputation that work brilliantly on Google often don't carry over to AI search tools like ChatGPT, Google AI Overview, or Perplexity.
+
+Those tools work differently. They pull from structured, trusted sources — and if you haven't been optimised for them, you're invisible there, even if you rank well on Google."""
+
+        plan_para = f"""That's what we do at GeoXperts. We take the authority {name} has already built and make it readable by AI search tools — so when someone nearby asks ChatGPT "who's a good plumber?" your name comes up.
+
+The plan is straightforward:
+- We structure your content and reviews for AI readability
+- We build your presence in the sources AI tools trust
+- We make sure you're recommended by name, not just listed
+
+This means more inbound enquiries, without paying for ads."""
 
     body = f"""Hi there,
 
-I came across {name} and wanted to reach out about something most local {trade} businesses aren't aware of yet.
+GeoXperts helps local trades businesses get recommended by AI tools — ChatGPT, Google AI, Perplexity — the way SEO once helped them rank on Google. It's the next wave, and right now most local businesses aren't on it yet.
 
-When someone in your area types "best plumber near me" into ChatGPT, Google AI, or Perplexity — your business might not be showing up, even if you rank well on Google.
+{review_para}
 
-That's because AI search works differently. It pulls from trusted sources, reviews, and structured information — and most local businesses haven't optimised for it yet.
+{plan_para}
 
-That's exactly what we do at GeoXperts. We help local trades businesses get recommended by AI tools — so when someone asks an AI chatbot for a plumber in your area, your name comes up.
+It's early days, which means there's a real first-mover advantage for businesses who move now.
 
-It's early days for this, which means there's a real first-mover advantage for businesses who act now.
-
-Would you be open to a quick 15-minute call to see if it's a good fit for {name}? No pressure — just a conversation.
-{SIGNATURE}{ps_line}"""
+Would you be open to a quick 15-minute call to see if it's a fit for {name}? No pressure — just a conversation.
+{SIGNATURE}"""
 
     return subject, body
 
