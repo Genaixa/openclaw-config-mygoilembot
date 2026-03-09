@@ -57,42 +57,38 @@ def generate_email(lead):
 
 "{review}"
 
-That's a brilliant review — the kind of thing that builds real trust. But here's the thing: most people searching for a plumber today aren't just using Google anymore. They're asking ChatGPT, Google AI Overview, Perplexity. And those tools don't see reviews the way Google does — unless your business has been specifically optimised for them."""
+Honestly, that's exactly what customers want to see. But here's the thing — when someone picks up their phone and asks ChatGPT or Google AI "who's a good plumber near me?", they probably won't find {name}. Not because you're not good enough. Just because those AI assistants don't know you exist yet."""
 
-        plan_para = f"""That's what we do at GeoXperts. We take the authority you've already built — reviews like that one, your years of experience, your reputation — and make sure AI tools can actually read it, trust it, and recommend {name} when someone nearby asks for a plumber.
+        plan_para = f"""What we do is simple: we make sure AI assistants know about {name}, what you do, and how good you are — so when someone nearby asks, your name actually comes up.
 
-The plan is straightforward:
-- We structure your existing reviews and content so AI search engines can parse them
-- We build your presence in the trusted sources AI tools pull from
-- We ensure when someone asks "who's a good plumber near me?" in ChatGPT or Google AI — your name comes up
+Think of it like this: years ago, businesses had to get on Google to be found. Now the same thing is happening with AI. We help you get there first, before your competitors do.
 
-This means more inbound enquiries, without paying for ads."""
+In practice that means:
+- More people finding you when they ask an AI for a recommendation
+- No extra ads, no extra spend
+- Just your existing reputation, working harder for you"""
 
     else:
-        review_para = f"""We had a look at {name} online — you've clearly built a solid local reputation. But here's something most {trade} businesses don't know yet: reviews and reputation that work brilliantly on Google often don't carry over to AI search tools like ChatGPT, Google AI Overview, or Perplexity.
+        review_para = f"""We had a look at {name} online — you've clearly built up a strong local reputation over the years. The trouble is, when someone asks ChatGPT or Google AI "who's a good plumber near me?", businesses like yours often don't show up — not because you're not good enough, but because AI assistants simply don't know you exist yet."""
 
-Those tools work differently. They pull from structured, trusted sources — and if you haven't been optimised for them, you're invisible there, even if you rank well on Google."""
+        plan_para = f"""What we do is simple: we make sure AI assistants know about {name}, what you do, where you are, and how good you are — so when someone nearby asks, your name actually comes up.
 
-        plan_para = f"""That's what we do at GeoXperts. We take the authority {name} has already built and make it readable by AI search tools — so when someone nearby asks ChatGPT "who's a good plumber?" your name comes up.
+Think of it like getting on Google back in the day. Same idea, new technology. And right now, most local trades businesses haven't done this yet — so there's a real head start available for those who move first.
 
-The plan is straightforward:
-- We structure your content and reviews for AI readability
-- We build your presence in the sources AI tools trust
-- We make sure you're recommended by name, not just listed
-
-This means more inbound enquiries, without paying for ads."""
+In practice that means:
+- More people finding you when they ask an AI for a recommendation
+- No extra ads, no extra spend
+- Just your existing reputation, working harder for you"""
 
     body = f"""Hi there,
 
-GeoXperts helps local trades businesses get recommended by AI tools — ChatGPT, Google AI, Perplexity — the way SEO once helped them rank on Google. It's the next wave, and right now most local businesses aren't on it yet.
+I run GeoXperts — we help local trades businesses show up when people ask AI assistants like ChatGPT or Google AI for recommendations. Think of it as the new version of being found on Google.
 
 {review_para}
 
 {plan_para}
 
-It's early days, which means there's a real first-mover advantage for businesses who move now.
-
-Would you be open to a quick 15-minute call to see if it's a fit for {name}? No pressure — just a conversation.
+Would you be up for a quick 15-minute call to see if it's something that could work for {name}? No pressure at all — just a conversation.
 {SIGNATURE}"""
 
     return subject, body
