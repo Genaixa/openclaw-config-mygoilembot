@@ -16,6 +16,10 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.utils import formatdate, make_msgid
 
+# Import review scraper from same directory
+sys.path.insert(0, os.path.dirname(__file__))
+from review_scraper import find_best_review
+
 # Config from environment (set in openclaw.json)
 EMAIL      = os.environ.get('GEOXPERTS_EMAIL', 'growth@geoXperts.co.uk')
 PASSWORD   = os.environ.get('GEOXPERTS_PASSWORD', '')
@@ -36,10 +40,19 @@ growth@geoXperts.co.uk
 """
 
 def generate_email(lead):
-    name = lead['name']
-    trade = 'plumbing'  # could be dynamic later
+    name    = lead['name']
+    website = lead.get('website', '')
+    trade   = 'plumbing'
 
-    subject = f"Is {name} showing up when people ask ChatGPT for a {trade[:-3]}er?"
+    subject = f"Is {name} showing up when people ask ChatGPT for a plumber?"
+
+    # Try to find a customer review for personalised P.S.
+    ps_line = ''
+    if website:
+        print(f"  Looking for reviews on {website}...")
+        review = find_best_review(website)
+        if review:
+            ps_line = f'\nP.S. I came across this review of yours: "{review}" — that\'s exactly the kind of authority signal AI search engines look for. Worth making the most of it.'
 
     body = f"""Hi there,
 
@@ -54,8 +67,7 @@ That's exactly what we do at GeoXperts. We help local trades businesses get reco
 It's early days for this, which means there's a real first-mover advantage for businesses who act now.
 
 Would you be open to a quick 15-minute call to see if it's a good fit for {name}? No pressure — just a conversation.
-
-{SIGNATURE}"""
+{SIGNATURE}{ps_line}"""
 
     return subject, body
 
