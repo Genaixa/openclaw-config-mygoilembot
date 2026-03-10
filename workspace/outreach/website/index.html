@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GeoXperts — AI Search Optimisation for Local Businesses</title>
+  <meta name="description" content="GeoXperts helps local trades businesses show up when people ask ChatGPT, Google AI, or Perplexity for a recommendation. The new version of getting found on Google." />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --dark:    #0d1117;
+      --dark2:   #161b22;
+      --dark3:   #21262d;
+      --border:  #30363d;
+      --text:    #e6edf3;
+      --muted:   #8b949e;
+      --accent:  #4493f8;
+      --accent2: #3fb950;
+      --white:   #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: var(--dark);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 2rem;
+      background: rgba(13,17,23,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo { font-size: 1.2rem; font-weight: 700; color: var(--white); letter-spacing: -0.02em; }
+    .logo span { color: var(--accent); }
+    nav .cta-btn {
+      background: var(--accent);
+      color: var(--white);
+      padding: 0.5rem 1.25rem;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+    nav .cta-btn:hover { background: #58a6ff; text-decoration: none; }
+
+    /* SECTIONS */
+    section { padding: 5rem 2rem; }
+    .container { max-width: 900px; margin: 0 auto; }
+    .container-wide { max-width: 1100px; margin: 0 auto; }
+
+    /* HERO */
+    .hero {
+      padding: 7rem 2rem 5rem;
+      text-align: center;
+      background: radial-gradient(ellipse at 50% 0%, rgba(68,147,248,0.12) 0%, transparent 70%);
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(68,147,248,0.12);
+      border: 1px solid rgba(68,147,248,0.3);
+      color: var(--accent);
+      padding: 0.3rem 0.9rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.25rem;
+      color: var(--white);
+    }
+    .hero h1 span { color: var(--accent); }
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 580px;
+      margin: 0 auto 2.5rem;
+    }
+    .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--accent);
+      color: var(--white);
+      padding: 0.85rem 2rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+    .btn-primary:hover { background: #58a6ff; text-decoration: none; }
+    .btn-secondary {
+      background: var(--dark3);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 0.85rem 2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    .btn-secondary:hover { background: var(--dark2); text-decoration: none; }
+
+    /* LOGOS */
+    .logos {
+      padding: 2rem 2rem 3rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .logos p { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 1.25rem; }
+    .logo-row { display: flex; gap: 2rem; justify-content: center; align-items: center; flex-wrap: wrap; }
+    .logo-pill {
+      background: var(--dark3);
+      border: 1px solid var(--border);
+      padding: 0.5rem 1.25rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    /* PROBLEM */
+    .problem { background: var(--dark2); }
+    .section-label {
+      font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.1em;
+      color: var(--accent); font-weight: 600; margin-bottom: 0.75rem;
+    }
+    h2 {
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--white);
+      margin-bottom: 1rem;
+    }
+    .lead { font-size: 1.05rem; color: var(--muted); max-width: 680px; margin-bottom: 2.5rem; }
+
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2.5rem; }
+    @media (max-width: 640px) { .two-col { grid-template-columns: 1fr; } }
+
+    .card {
+      background: var(--dark);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+    }
+    .card h3 { font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 0.5rem; }
+    .card p { font-size: 0.9rem; color: var(--muted); }
+    .card.highlight { border-color: rgba(68,147,248,0.4); background: rgba(68,147,248,0.04); }
+    .card.highlight h3 { color: var(--accent); }
+
+    /* HOW IT WORKS */
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 2.5rem; }
+    .step { text-align: center; }
+    .step-num {
+      width: 2.5rem; height: 2.5rem;
+      border-radius: 50%;
+      background: rgba(68,147,248,0.12);
+      border: 1px solid rgba(68,147,248,0.3);
+      color: var(--accent);
+      font-weight: 800;
+      font-size: 0.95rem;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1rem;
+    }
+    .step h3 { font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 0.4rem; }
+    .step p { font-size: 0.88rem; color: var(--muted); }
+
+    /* WHAT'S INCLUDED */
+    .included { background: var(--dark2); }
+    .included-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; margin-top: 2.5rem; }
+    .included-item {
+      display: flex; gap: 0.75rem; align-items: flex-start;
+      padding: 1.25rem;
+      background: var(--dark);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+    .check { color: var(--accent2); font-size: 1.1rem; margin-top: 0.1rem; flex-shrink: 0; }
+    .included-item h4 { font-size: 0.95rem; font-weight: 700; color: var(--white); margin-bottom: 0.25rem; }
+    .included-item p { font-size: 0.85rem; color: var(--muted); }
+
+    /* PRICING */
+    .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 2.5rem; }
+    .plan {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.75rem;
+      background: var(--dark2);
+    }
+    .plan.featured {
+      border-color: var(--accent);
+      background: rgba(68,147,248,0.05);
+      position: relative;
+    }
+    .plan-badge {
+      position: absolute; top: -0.7rem; left: 50%; transform: translateX(-50%);
+      background: var(--accent); color: var(--white);
+      font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+      padding: 0.25rem 0.75rem; border-radius: 20px;
+    }
+    .plan-name { font-size: 0.85rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.5rem; }
+    .plan-price { font-size: 2.4rem; font-weight: 800; color: var(--white); letter-spacing: -0.03em; line-height: 1; }
+    .plan-price span { font-size: 1rem; font-weight: 400; color: var(--muted); }
+    .plan-desc { font-size: 0.85rem; color: var(--muted); margin: 0.75rem 0 1.25rem; }
+    .plan-features { list-style: none; margin-bottom: 1.5rem; }
+    .plan-features li { font-size: 0.88rem; color: var(--text); padding: 0.35rem 0; border-bottom: 1px solid var(--border); display: flex; gap: 0.5rem; }
+    .plan-features li:last-child { border-bottom: none; }
+    .plan-features .tick { color: var(--accent2); }
+    .plan-btn {
+      display: block; text-align: center;
+      padding: 0.75rem;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      background: var(--dark3);
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .plan-btn:hover { background: var(--border); text-decoration: none; }
+    .plan.featured .plan-btn { background: var(--accent); border-color: var(--accent); color: var(--white); }
+    .plan.featured .plan-btn:hover { background: #58a6ff; }
+
+    .onboarding-note {
+      margin-top: 1.25rem;
+      text-align: center;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    /* WHY NOW */
+    .why-now { background: var(--dark2); }
+    .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; margin-top: 2.5rem; }
+    .stat { text-align: center; }
+    .stat-num { font-size: 2.5rem; font-weight: 800; color: var(--accent); letter-spacing: -0.04em; line-height: 1; }
+    .stat-label { font-size: 0.85rem; color: var(--muted); margin-top: 0.4rem; }
+
+    /* FAQ */
+    .faq-list { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1rem; }
+    .faq-item {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .faq-q {
+      padding: 1.1rem 1.25rem;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--white);
+      background: var(--dark2);
+      cursor: default;
+    }
+    .faq-a {
+      padding: 1rem 1.25rem;
+      font-size: 0.9rem;
+      color: var(--muted);
+      background: var(--dark);
+      border-top: 1px solid var(--border);
+      line-height: 1.7;
+    }
+
+    /* CTA BLOCK */
+    .cta-block {
+      text-align: center;
+      padding: 5rem 2rem;
+      background: radial-gradient(ellipse at 50% 0%, rgba(68,147,248,0.1) 0%, transparent 70%);
+    }
+    .cta-block h2 { margin-bottom: 1rem; }
+    .cta-block p { color: var(--muted); max-width: 520px; margin: 0 auto 2.5rem; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    footer a { color: var(--muted); }
+    footer a:hover { color: var(--text); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Geo<span>Xperts</span></div>
+  <a class="cta-btn" href="https://cal.com/geoxperts/discovery">Book a Free Call</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-badge">AI Search Optimisation</div>
+    <h1>Your customers are asking AI<br>for recommendations.<br><span>Are you showing up?</span></h1>
+    <p>ChatGPT, Google AI, and Perplexity are now the first place people go when they need a local tradesperson. GeoXperts makes sure your business is the one they find.</p>
+    <div class="hero-btns">
+      <a class="btn-primary" href="https://cal.com/geoxperts/discovery">Book a Free 15-Minute Call</a>
+      <a class="btn-secondary" href="#how-it-works">See How It Works</a>
+    </div>
+  </div>
+</section>
+
+<!-- LOGOS -->
+<div class="logos">
+  <p>We optimise your presence on</p>
+  <div class="logo-row">
+    <div class="logo-pill">ChatGPT</div>
+    <div class="logo-pill">Google AI</div>
+    <div class="logo-pill">Perplexity</div>
+    <div class="logo-pill">Siri</div>
+    <div class="logo-pill">Google AI Overview</div>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section class="problem">
+  <div class="container">
+    <div class="section-label">The Problem</div>
+    <h2>Google is changing. Most local businesses don't know yet.</h2>
+    <p class="lead">More and more searches now show an AI answer before any website links. People are going straight to ChatGPT or Google AI and asking by name: "who's a good plumber near me?"</p>
+    <div class="two-col">
+      <div class="card">
+        <h3>Traditional Search (SEO)</h3>
+        <p>Google ranks your website based on keywords and backlinks. You compete for clicks to your site. Most agencies focus here — and it's getting harder every year as AI takes over the top of the results page.</p>
+      </div>
+      <div class="card highlight">
+        <h3>AI Search (GEO)</h3>
+        <p>AI tools read reviews, directories, structured data, and trusted sources — then recommend businesses by name. It doesn't matter how well you rank on Google. If AI doesn't know you exist, you're invisible to this growing wave of searches.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how-it-works">
+  <div class="container">
+    <div class="section-label">How It Works</div>
+    <h2>We make AI know your business — and recommend it.</h2>
+    <p class="lead">A straightforward process that builds your AI presence from the ground up, then keeps it growing month by month.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Audit</h3>
+        <p>We check how you appear in AI results today and identify exactly what's missing or wrong.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Build</h3>
+        <p>We fix your Google Business Profile, Bing Places, Apple Maps, directories, schema markup, and area pages — everything AI tools rely on.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Grow</h3>
+        <p>Each month we manage your reviews, upload geotagged photos, expand your service areas, and track your AI visibility.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h3>Report</h3>
+        <p>You get a monthly report with screenshots of real AI searches — so you can see exactly what customers see.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT'S INCLUDED -->
+<section class="included">
+  <div class="container-wide">
+    <div class="section-label">What's Included</div>
+    <h2>Everything that makes AI recommend you.</h2>
+    <p class="lead">Nothing is cut out — every element plays a role. The difference between packages is scale, not service.</p>
+    <div class="included-grid">
+      <div class="included-item">
+        <div class="check">✓</div>
+        <div>
+          <h4>Google Business Profile</h4>
+          <p>Full setup, optimisation, and ongoing management — the #1 source AI tools pull from.</p>
+        </div>
+      </div>
+      <div class="included-item">
+        <div class="check">✓</div>
+        <div>
+          <h4>Bing Places</h4>
+          <p>ChatGPT uses Bing as its web index. Most businesses have never claimed their listing.</p>
+        </div>
+      </div>
+      <div class="included-item">
+        <div class="check">✓</div>
+        <div>
+          <h4>Apple Maps</h4>
+          <p>Siri and Spotlight search use Apple Maps. Huge on iPhone — almost always unclaimed.</p>
+        </div>
+      </div>
+      <div class="included-item">
+        <div class="check">✓</div>
+        <div>
+          <h4>Review Management</h4>
+          <p>We send review requests to your customers and respond to every review on your behalf.</p>
+        </div>
+      </div>
+      <div class="included-item">
+        <div class="check">✓</div>
+        <div>
+          <h4>Geotagged Photos</h4>
+          <p>We upload photos of your completed work with GPS coordinates matched to the job location.</p>
+        </div>
+      </div>
+      <div class="included-item">
+        <div class="check">✓</div>
+        <div>
+          <h4>Service Area Pages</h4>
+          <p>A dedicated page on your website for each area you cover — how AI learns where you work.</p>
+        </div>
+      </div>
+      <div class="included-item">
+        <div class="check">✓</div>
+        <div>
+          <h4>NAP Consistency</h4>
+          <p>Your name, address and phone number made identical across every directory. Small differences confuse AI.</p>
+        </div>
+      </div>
+      <div class="included-item">
+        <div class="check">✓</div>
+        <div>
+          <h4>Monthly AI Report</h4>
+          <p>Screenshots of real AI searches each month so you can see your visibility growing.</p>
+        </div>
+      </div>
+      <div class="included-item">
+        <div class="check">✓</div>
+        <div>
+          <h4>Accreditations</h4>
+          <p>Gas Safe, NICEIC, Checkatrade and other trust marks highlighted everywhere AI can see them.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="container-wide">
+    <div class="section-label">Pricing</div>
+    <h2>Simple, honest pricing.</h2>
+    <p class="lead">All packages include every service. The difference is how many areas we cover and how often we update your content. No long contracts — cancel anytime with 30 days notice.</p>
+    <div class="pricing-grid">
+
+      <div class="plan">
+        <div class="plan-name">Starter</div>
+        <div class="plan-price">£149<span>/mo</span></div>
+        <div class="plan-desc">For sole traders covering 1–2 local areas.</div>
+        <ul class="plan-features">
+          <li><span class="tick">✓</span> Up to 2 service area pages</li>
+          <li><span class="tick">✓</span> Up to 10 review requests/mo</li>
+          <li><span class="tick">✓</span> 4 geotagged photo uploads/mo</li>
+          <li><span class="tick">✓</span> Review responses</li>
+          <li><span class="tick">✓</span> Monthly AI report</li>
+          <li><span class="tick">✓</span> Content updates quarterly</li>
+        </ul>
+        <a class="plan-btn" href="https://cal.com/geoxperts/discovery">Book a Call</a>
+      </div>
+
+      <div class="plan featured">
+        <div class="plan-badge">Most Popular</div>
+        <div class="plan-name">Growth</div>
+        <div class="plan-price">£249<span>/mo</span></div>
+        <div class="plan-desc">For established businesses covering a local town or borough.</div>
+        <ul class="plan-features">
+          <li><span class="tick">✓</span> Up to 5 service area pages</li>
+          <li><span class="tick">✓</span> Up to 30 review requests/mo</li>
+          <li><span class="tick">✓</span> 10 geotagged photo uploads/mo</li>
+          <li><span class="tick">✓</span> Review responses</li>
+          <li><span class="tick">✓</span> Monthly AI report</li>
+          <li><span class="tick">✓</span> Content updates monthly</li>
+        </ul>
+        <a class="plan-btn" href="https://cal.com/geoxperts/discovery">Book a Call</a>
+      </div>
+
+      <div class="plan">
+        <div class="plan-name">Pro</div>
+        <div class="plan-price">£399<span>/mo</span></div>
+        <div class="plan-desc">For businesses covering a city or multiple towns.</div>
+        <ul class="plan-features">
+          <li><span class="tick">✓</span> Up to 10 service area pages</li>
+          <li><span class="tick">✓</span> Unlimited review requests</li>
+          <li><span class="tick">✓</span> 20 geotagged photo uploads/mo</li>
+          <li><span class="tick">✓</span> Review responses</li>
+          <li><span class="tick">✓</span> Monthly AI report</li>
+          <li><span class="tick">✓</span> Content updates weekly</li>
+        </ul>
+        <a class="plan-btn" href="https://cal.com/geoxperts/discovery">Book a Call</a>
+      </div>
+
+    </div>
+    <p class="onboarding-note">All packages require a one-off onboarding fee of <strong>£350</strong> — covers your full audit and setup. Annual plans available: pay upfront and get 2 months free.</p>
+  </div>
+</section>
+
+<!-- WHY NOW -->
+<section class="why-now">
+  <div class="container">
+    <div class="section-label">Why Now</div>
+    <h2>First-mover advantage is real.</h2>
+    <p class="lead">AI search is still early. Most local businesses haven't moved yet — which means the window to get ahead of your competitors is open right now. Once a business is established in AI search, it's much harder to displace them.</p>
+    <div class="stat-grid">
+      <div class="stat">
+        <div class="stat-num">1 in 3</div>
+        <div class="stat-label">Google searches now show AI Overview — and growing</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">100M+</div>
+        <div class="stat-label">Weekly ChatGPT users asking for recommendations</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">~0%</div>
+        <div class="stat-label">Of local trades businesses have optimised for AI search</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="container">
+    <div class="section-label">FAQ</div>
+    <h2>Common questions.</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q">We already have SEO. Is this different?</div>
+        <div class="faq-a">Yes — completely. SEO targets Google's traditional ranking algorithm. GEO targets AI tools like ChatGPT, Perplexity, and Google AI Overview, which use entirely different signals. You can rank number one on Google and still be invisible to AI search. They're separate systems.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">How long before we see results?</div>
+        <div class="faq-a">Most clients start appearing in AI results within 4–8 weeks. Full results are typically visible by month 3. And unlike paid ads, once you're established in AI search, the visibility compounds — it keeps growing over time.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">How do I know it's working?</div>
+        <div class="faq-a">Every month you receive a report with screenshots of real AI searches — "best plumber in [your area]" — showing exactly where and how you appear. It's transparent and concrete.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">We get most of our work through word of mouth.</div>
+        <div class="faq-a">That's a great sign — it means your reputation is strong. GEO is essentially word of mouth at scale. When AI recommends your business, it's passing that reputation on to thousands of people who are actively looking right now.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Is there a contract?</div>
+        <div class="faq-a">No long-term contracts. You can cancel anytime with 30 days notice. We'd rather keep clients because the results speak for themselves.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What trades do you work with?</div>
+        <div class="faq-a">We work with any local trades business — plumbers, electricians, builders, roofers, decorators, locksmiths, gardeners, carpenters, and more. If customers search for your service locally, we can help.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-block">
+  <div class="container">
+    <div class="section-label">Get Started</div>
+    <h2>See if your business shows up.</h2>
+    <p>Book a free 15-minute call. We'll show you exactly where you appear in AI search today — and what it would take to get you to the top.</p>
+    <a class="btn-primary" href="https://cal.com/geoxperts/discovery">Book Your Free Call</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>
+    <strong style="color:var(--text)">GeoXperts</strong> — AI Search Optimisation for Local Businesses<br>
+    <a href="mailto:growth@geoxperts.co.uk">growth@geoxperts.co.uk</a> &nbsp;·&nbsp;
+    <a href="tel:+447722158936">+44 7722 158936</a> &nbsp;·&nbsp;
+    Gateshead, UK
+  </p>
+  <p style="margin-top:0.75rem">© 2026 GeoXperts. A service by Genaixa.</p>
+</footer>
+
+</body>
+</html>
