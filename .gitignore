@@ -25,3 +25,7 @@ workspace/DRAFT.txt
 workspace/.openclaw/
 workspace-senior/.openclaw/
 workspace-receptionist/.openclaw/
+
+# GBP OAuth secrets
+workspace/config/gbp-oauth-credentials.json
+workspace/clients/*/gbp-token.json
